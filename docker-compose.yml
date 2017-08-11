@@ -1,0 +1,37 @@
+version: '2.1'
+services:
+  nms:
+     image: jarischaefer/docker-librenms
+     ports:
+       - "8889:80"
+     links:
+       - mysql:mysql
+     environment:
+       - DB_HOST=mysql
+       - DB_NAME=librenms
+       - DB_USER=librenms
+       - DB_PASS=librenms
+       - PUID=0
+       - PGID=101
+       - TZ=Europe/Bucharest
+       - BASE_URL=/
+       - POLLERS=16
+     volumes:
+       - /home/chaconmelgarejo/docker/librenms/logs:/opt/librenms/logs
+       - /home/chaconmelgarejo/docker/librenms/rrd:/opt/librenms/rrd
+     depends_on:
+       - mysql
+     stdin_open: true
+     tty: true
+  mysql:
+       image:
+         mysql
+       ports:
+         - "3334:3306"
+       environment:
+         - MYSQL_ROOT_PASSWORD=librenms
+         - MYSQL_DATABASE=librenms
+         - MYSQL_USER=librenms
+         - MYSQL_PASSWORD=librenms
+       volumes:
+         - /home/chaconmelgarejo/docker/librenms/bd/:/var/lib/mysql
