@@ -17,8 +17,8 @@ services:
        - BASE_URL=/
        - POLLERS=16
      volumes:
-       - /home/chaconmelgarejo/docker/librenms/logs:/opt/librenms/logs
-       - /home/chaconmelgarejo/docker/librenms/rrd:/opt/librenms/rrd
+       - ./.logs:/opt/librenms/logs
+       - ./.rrd:/opt/librenms/rrd
      depends_on:
        - mysql
      stdin_open: true
@@ -34,4 +34,4 @@ services:
          - MYSQL_USER=librenms
          - MYSQL_PASSWORD=librenms
        volumes:
-         - /home/chaconmelgarejo/docker/librenms/bd/:/var/lib/mysql
+         - ./.bd/:/var/lib/mysql
